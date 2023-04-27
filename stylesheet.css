@@ -3,13 +3,13 @@
 /* Calculator frame styles */
 .calculator-frame {
   position: absolute;
-  top: -20px;
+  top: 0px;
   left: -20px;
   width: calc(100% + 40px);
   height: calc(100% + 40px);
   border: 10px solid #101010;
   border-radius: 5px;
-  background-color: #0A0A0A;
+  /*background-color: #0A0A0A;*/
   z-index: -3;
 }
 
@@ -42,13 +42,13 @@
 /* Header styles */
 header {
   position: absolute;
-  top: 50px;
+  top: 575px;
   left: 50%;
   transform: translateX(-50%);
-  font-size: 2rem;
+  font-size: 3.75rem;
   font-family: 'IM Fell English', serif;
   text-align: center;
-  color: #ff0000;
+  color: #ff5349;
   text-shadow: 2px 2px #000;
   z-index: 1;
 }
