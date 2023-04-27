@@ -107,6 +107,157 @@ button {
   grid-row: 2;
   background-color: #ffa500;
   color: #fff;
+  font-size: 1.5rem;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  transform: translateZ(30px); /* Add depth to the button */
+}
+
+.number {
+  border: 1px solid;
+  border-image: linear-gradient(to bottom right, #fff, #ccc) 1;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  background-color: #90ee90;
+  color: #ff2400;
+  font-size: 1.5rem;
+  padding: 10px;
+  border-radius: 5px;
+  transform: translateZ(30px); /* Add depth to the buttons */
+}
+
+.operator {
+  background-color: #000;
+  color: #fff;
+  font-size: 1.5rem;
+  padding: 10px;
+  border-radius: 5px;
+  transform: translateZ(30px); /* Add depth to the buttons */
+}
+
+.equals {
+  grid-column: 3 / 5;
+  grid-row: 5;
+  background-color: #ff2400;
+  color: #fff;
+  font-size: 1.5rem;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  transform: translateZ(30px); /* Add depth to the button */
+}
+
+button {
+  font-family: 'IM Fell English', serif;
+  font-size: 1.5rem;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+  outline: none;
+  background-color: transparent;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+button:hover {
+  background-color: #67a4e4;
+  color: #fff;
+}
+
+button:active {
+  background-color: #4a90e2;
+  color: #fff;
+  box-shadow: none;
+}
+
+.result {
+  grid-column: 1 / 5;
+  grid-row: 1;
+  background-color: #000;
+  color: #ff2400;
+  font-size: 2rem;
+  padding: 20px;
+  text-align: right;
+  overflow: hidden;
+  white-space: nowrap;
+  border-radius: 5px;
+}
+
+.calculator {
+  margin: 20px;
+  width: calc(100% - 40px);
+  height: calc(100% - 120px);
+  border-radius: 10px;
+  background-color: #1C2938;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(5, 1fr);
+  grid-gap: 10px;
+  padding: 20px;
+  perspective: 800px;
+  transform-style: preserve-3d;
+}
+
+/* Body styles */
+body {
+  font-family: 'IM Fell English', serif;
+  background-color: #0A0A0A;
+  margin: 0;
+  padding: 0;
+}
+
+/* Calculator styles */
+.calculator {
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+  margin: 10px auto 0;
+  width: 90%;
+  max-width: 400px;
+  height: 500px;
+  border-radius: 10px;
+  background-color: #1C2938;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(5, 1fr);
+  grid-gap: 10px;
+  padding: 20px;
+  perspective: 800px; /* Add perspective to the calculator */
+  transform-style: preserve-3d; /* Add 3D transformation to the calculator */
+  animation: none; /* Remove animation from the calculator */
+  z-index: 0;
+}
+
+.result {
+  grid-column: 1 / 5;
+  grid-row: 1;
+  background-color: #000;
+  color: #ff2400;
+  font-size: 2.5rem;
+  padding: 10px;
+  text-align: right;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+button {
+  font-size: 2rem;
+  font-family: 'IM Fell English', serif;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  transform-style: preserve-3d; /* Add 3D transformation to the buttons */
+  /*background-color: #67a4e4;*/
+  color: #fff;
+}
+
+.clear {
+  grid-column: 1 / 3;
+  grid-row: 2;
+  background-color: #ffa500;
+  color: #fff;
 }
 
 .number {
@@ -141,3 +292,57 @@ button:active {
   /*background-color: #4a90e2;*/
   color: #fff;
 }
+
+/* Responsive styles */
+@media screen and (max-width: 768px) {
+  .calculator {
+    margin: 10px auto;
+    width: 90%;
+    max-width: 400px;
+    height: auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .result {
+    font-size: 3rem;
+  }
+  
+  button {
+    font-size: 2rem;
+    width: 25%;
+    height: 60px;
+    margin: 5px;
+  }
+  
+  .clear {
+    grid-column: 1 / 3;
+    grid-row: 2;
+    background-color: #ffa500;
+    color: #fff;
+    width: 50%;
+  }
+  
+  .number {
+    width: 25%;
+    height: 60px;
+    font-size: 2rem;
+  }
+  
+  .operator {
+    width: 25%;
+    height: 60px;
+    font-size: 2rem;
+  }
+  
+  .equals {
+    grid-column: 3 / 5;
+    grid-row: 5;
+    background-color: #ff2400;
+    color: #fff;
+    width: 50%;
+  }
+}
+
