@@ -14,6 +14,13 @@ body {
   grid-template-rows: repeat(5, 1fr);
   grid-gap: 10px;
   padding: 10px;
+  perspective: 800px; /* Add perspective to the calculator */
+  animation: rotate 10s linear infinite; /* Add animation to rotate the calculator */
+}
+
+@keyframes rotate {
+  from { transform: rotateY(0deg); }
+  to { transform: rotateY(360deg); }
 }
 
 .result {
@@ -33,6 +40,7 @@ button {
   border-radius: 5px;
   border: none;
   cursor: pointer;
+  transform-style: preserve-3d; /* Add 3D transformation to the buttons */
 }
 
 .clear {
@@ -48,11 +56,13 @@ button {
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
   background-color: #202020;
   color: #fff;
+  transform: translateZ(50px); /* Add depth to the buttons */
 }
 
 .operator {
   background-color: #000;
   color: #fff;
+  transform: translateZ(50px); /* Add depth to the buttons */
 }
 
 .equals {
@@ -60,6 +70,7 @@ button {
   grid-row: 5;
   background-color: #202020;
   color: #fff;
+  transform: translateZ(50px); /* Add depth to the button */
 }
 
 button:hover {
