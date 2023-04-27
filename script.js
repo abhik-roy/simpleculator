@@ -1,92 +1,85 @@
-// Select all of the necessary elements from the HTML
-const display = document.querySelector(".result");
-const clearButton = document.querySelector(".clear");
-const numberButtons = document.querySelectorAll(".number");
-const operatorButtons = document.querySelectorAll(".operator");
-const equalsButton = document.querySelector(".equals");
+// Select all the necessary DOM elements
+const buttons = document.querySelectorAll(".calculator button");
+const result = document.querySelector(".result");
 
-let currentNumber = "";
-let firstOperand = null;
-let operator = null;
-let shouldResetDisplay = false;
+// Initialize the calculation variables
+let currentOperand = "";
+let previousOperand = "";
+let currentOperator = null;
+let shouldResetScreen = false;
 
-// This function updates the display with the current number
-function updateDisplay() {
-  display.textContent = currentNumber;
+// Function to reset the calculator
+function resetCalculator() {
+  currentOperand = "";
+  previousOperand = "";
+  currentOperator = null;
+  shouldResetScreen = false;
 }
 
-// This function clears the current number and resets the calculator state
-function clear() {
-  currentNumber = "";
-  firstOperand = null;
-  operator = null;
-  shouldResetDisplay = false;
+// Function to update the calculator screen
+function updateScreen() {
+  result.value = currentOperand;
 }
 
-// This function handles when a number button is clicked
-function handleNumberClick(event) {
-  const number = event.target.textContent;
-  if (shouldResetDisplay) {
-    currentNumber = number;
-    shouldResetDisplay = false;
-  } else {
-    currentNumber += number;
+// Function to handle number button clicks
+function handleNumberClick(number) {
+  if (currentOperand === "0" || shouldResetScreen) {
+    currentOperand = "";
+    shouldResetScreen = false;
   }
-  updateDisplay();
+  currentOperand += number;
+  updateScreen();
 }
 
-// This function handles when an operator button is clicked
-function handleOperatorClick(event) {
-  const nextOperator = event.target.textContent;
-  const inputValue = parseFloat(currentNumber);
-  if (firstOperand === null && !isNaN(inputValue)) {
-    firstOperand = inputValue;
-  } else if (operator) {
-    const result = calculate(firstOperand, inputValue, operator);
-    currentNumber = String(result);
-    firstOperand = result;
+// Function to handle operator button clicks
+function handleOperatorClick(operator) {
+  if (currentOperator !== null) {
+    performCalculation();
   }
-  shouldResetDisplay = true;
-  operator = nextOperator;
+  currentOperator = operator;
+  previousOperand = currentOperand;
+  currentOperand = "";
 }
 
-// This function handles when the equals button is clicked
+// Function to handle equals button click
 function handleEqualsClick() {
-  const inputValue = parseFloat(currentNumber);
-  if (firstOperand !== null && operator) {
-    currentNumber = calculate(firstOperand, inputValue, operator);
-    firstOperand = null;
-    operator = null;
-    shouldResetDisplay = true;
-    updateDisplay();
-  }
+  performCalculation();
+  currentOperator = null;
 }
 
-// This function calculates the result of the current expression
-function calculate(firstOperand, secondOperand, operator) {
-  if (operator === "+") {
-    return firstOperand + secondOperand;
-  } else if (operator === "-") {
-    return firstOperand - secondOperand;
-  } else if (operator === "*") {
-    return firstOperand * secondOperand;
-  } else if (operator === "/") {
-    return firstOperand / secondOperand;
+// Function to perform the actual calculation
+function performCalculation() {
+  if (currentOperator === null || shouldResetScreen) return;
+  if (currentOperator === "+") {
+    currentOperand = parseFloat(previousOperand) + parseFloat(currentOperand);
+  } else if (currentOperator === "-") {
+    currentOperand = parseFloat(previousOperand) - parseFloat(currentOperand);
+  } else if (currentOperator === "*") {
+    currentOperand = parseFloat(previousOperand) * parseFloat(currentOperand);
+  } else if (currentOperator === "/") {
+    currentOperand = parseFloat(previousOperand) / parseFloat(currentOperand);
   }
+  shouldResetScreen = true;
+  updateScreen();
 }
 
-// Add event listeners to all of the buttons
-clearButton.addEventListener("click", () => {
-  clear();
-  updateDisplay();
-});
+// Function to handle clear button click
+function handleClearClick() {
+  resetCalculator();
+  updateScreen();
+}
 
-numberButtons.forEach((button) => {
-  button.addEventListener("click", handleNumberClick);
+// Loop through all the buttons and add event listeners to them
+buttons.forEach((button) => {
+  button.addEventListener("click", () => {
+    if (button.classList.contains("number")) {
+      handleNumberClick(button.innerText);
+    } else if (button.classList.contains("operator")) {
+      handleOperatorClick(button.innerText);
+    } else if (button.classList.contains("equals")) {
+      handleEqualsClick();
+    } else if (button.classList.contains("clear")) {
+      handleClearClick();
+    }
+  });
 });
-
-operatorButtons.forEach((button) => {
-  button.addEventListener("click", handleOperatorClick);
-});
-
-equalsButton.addEventListener("click", handleEqualsClick);
