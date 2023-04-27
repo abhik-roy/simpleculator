@@ -1,25 +1,30 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>Simple Calculator</title>
-    <link rel="stylesheet" type="text/css" href="stylesheet.css">
-  </head>
-  <body>
-    <div class="container">
-      <h1>Simple Calculator</h1>
-      <form>
-        <input type="text" id="num1" placeholder="Enter First Number">
-        <input type="text" id="num2" placeholder="Enter Second Number">
-        <br>
-        <br>
-        <input type="button" value="+" onclick="add()">
-        <input type="button" value="-" onclick="subtract()">
-        <input type="button" value="*" onclick="multiply()">
-        <input type="button" value="/" onclick="divide()">
-      </form>
-      <h3>Result:</h3>
-      <p id="result"></p>
-    </div>
-    <script src="script.js"></script>
-  </body>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Calculator</title>
+  <link rel="stylesheet" href="stylesheet.css">
+</head>
+<body>
+  <div class="calculator">
+    <div class="result"></div>
+    <button class="clear">C</button>
+    <button class="number">7</button>
+    <button class="number">8</button>
+    <button class="number">9</button>
+    <button class="operator">+</button>
+    <button class="number">4</button>
+    <button class="number">5</button>
+    <button class="number">6</button>
+    <button class="operator">-</button>
+    <button class="number">1</button>
+    <button class="number">2</button>
+    <button class="number">3</button>
+    <button class="operator">*</button>
+    <button class="number">0</button>
+    <button class="operator">/</button>
+    <button class="equals">=</button>
+  </div>
+  <script src="script.js"></script>
+</body>
 </html>
