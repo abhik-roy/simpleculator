@@ -1,109 +1,70 @@
-const calculator = {
-  displayValue: "0",
-  firstOperand: null,
-  operator: null,
-  waitingForSecondOperand: false,
-};
-
-function updateDisplay() {
-  const display = document.querySelector(".result");
-  display.textContent = calculator.displayValue;
-}
-
-updateDisplay();
-
-function inputDigit(digit) {
-  const { displayValue, waitingForSecondOperand } = calculator;
-
-  if (waitingForSecondOperand === true) {
-    calculator.displayValue = digit;
-    calculator.waitingForSecondOperand = false;
-  } else {
-    calculator.displayValue =
-      displayValue === "0" ? digit : displayValue + digit;
-  }
-}
-
-function inputDecimal(dot) {
-  if (calculator.waitingForSecondOperand === true) {
-    return;
-  }
-
-  if (!calculator.displayValue.includes(dot)) {
-    calculator.displayValue += dot;
-  }
-}
-
-function handleOperator(nextOperator) {
-  const { firstOperand, displayValue, operator } = calculator;
-  const inputValue = parseFloat(displayValue);
-
-  if (operator && calculator.waitingForSecondOperand) {
-    calculator.operator = nextOperator;
-    return;
-  }
-
-  if (firstOperand === null) {
-    calculator.firstOperand = inputValue;
-  } else if (operator) {
-    const currentValue = firstOperand || 0;
-    const result = performCalculation[operator](currentValue, inputValue);
-
-    calculator.displayValue = String(result);
-    calculator.firstOperand = result;
-  }
-
-  calculator.waitingForSecondOperand = true;
-  calculator.operator = nextOperator;
-}
-
-const performCalculation = {
-  "/": (firstOperand, secondOperand) => firstOperand / secondOperand,
-
-  "*": (firstOperand, secondOperand) => firstOperand * secondOperand,
-
-  "+": (firstOperand, secondOperand) => firstOperand + secondOperand,
-
-  "-": (firstOperand, secondOperand) => firstOperand - secondOperand,
-
-  "=": (firstOperand, secondOperand) => secondOperand,
-};
-
-function resetCalculator() {
-  calculator.displayValue = "0";
-  calculator.firstOperand = null;
-  calculator.operator = null;
-  calculator.waitingForSecondOperand = false;
-}
-
+const result = document.querySelector(".result");
 const clearButton = document.querySelector(".clear");
+const numberButtons = document.querySelectorAll(".number");
+const operatorButtons = document.querySelectorAll(".operator");
+const equalsButton = document.querySelector(".equals");
 
-clearButton.addEventListener("click", () => {
-  resetCalculator();
-  updateDisplay();
-});
+let currentInput = "";
+let currentOperator = "";
+let previousInput = "";
 
-const decimalButton = document.querySelector(".number:nth-child(16)");
-
-decimalButton.addEventListener("click", () => {
-  inputDecimal(".");
-  updateDisplay();
-});
-
-const digitButtons = document.querySelectorAll(".number");
-
-digitButtons.forEach((button) => {
+numberButtons.forEach((button) => {
   button.addEventListener("click", () => {
-    inputDigit(button.textContent);
-    updateDisplay();
+    currentInput += button.textContent;
+    updateResult(currentInput);
   });
 });
-
-const operatorButtons = document.querySelectorAll(".operator");
 
 operatorButtons.forEach((button) => {
   button.addEventListener("click", () => {
-    handleOperator(button.textContent);
-    updateDisplay();
+    if (currentInput === "") return;
+    if (previousInput !== "") calculate();
+    currentOperator = button.textContent;
+    previousInput = currentInput;
+    currentInput = "";
   });
 });
+
+equalsButton.addEventListener("click", () => {
+  if (previousInput === "" || currentInput === "") return;
+  calculate();
+});
+
+clearButton.addEventListener("click", () => {
+  currentInput = "";
+  currentOperator = "";
+  previousInput = "";
+  updateResult("");
+});
+
+function updateResult(value) {
+  result.textContent = value;
+}
+
+function calculate() {
+  let result;
+  const a = parseFloat(previousInput);
+  const b = parseFloat(currentInput);
+
+  switch (currentOperator) {
+    case "+":
+      result = a + b;
+      break;
+    case "-":
+      result = a - b;
+      break;
+    case "*":
+      result = a * b;
+      break;
+    case "/":
+      result = a / b;
+      break;
+    default:
+      return;
+  }
+
+  updateResult(result.toFixed(2));
+  currentInput = result.toString();
+  previousInput = "";
+  currentOperator = "";
+}
